@@ -1,36 +1,59 @@
-<h1>Real Tennis Clubs — Towels</h1>
+<h1 class="page-title">Real Tennis Clubs — Towels</h1>
 
 <label for="club-select">Choose a club:</label>
-<select id="club-select">
+<select id="club-select" class="club-select">
   <option value="">-- select a club --</option>
   <% Club.order(:name).each do |club| %>
     <option value="<%= club.id %>"><%= club.name %></option>
   <% end %>
 </select>
 
-<div id="club-result" style="margin-top:1em; font-weight:600"></div>
+<!-- Big message area -->
+<section id="playing-message" class="playing-message" aria-live="polite" role="status">
+  <!-- We keep the structure semantic and accessible with separate spans so JS can set textContent safely -->
+  <span class="prefix">I AM PLAYING AT</span>
+  <span id="club-name" class="club-name" aria-hidden="true">—</span>
+  <span id="towel-statement" class="towel-statement"> </span>
+  <div id="notes" class="notes" aria-hidden="true"></div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const select = document.getElementById('club-select');
-  const result = document.getElementById('club-result');
+  const clubNameEl = document.getElementById('club-name');
+  const towelStatementEl = document.getElementById('towel-statement');
+  const notesEl = document.getElementById('notes');
+
+  function clearMessage() {
+    clubNameEl.textContent = '—';
+    towelStatementEl.textContent = '';
+    notesEl.textContent = '';
+  }
+
+  clearMessage();
 
   select.addEventListener('change', function() {
     const id = select.value;
-    if (!id) { result.textContent = ''; return; }
+    if (!id) { clearMessage(); return; }
 
     fetch(`/clubs/${id}/status`)
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Network response was not ok');
+        return r.json();
+      })
       .then(data => {
-        if (data.supplies_towels) {
-          result.textContent = `${data.name} supplies towels. ${data.notes ? '(' + data.notes + ')' : ''}`;
-        } else {
-          result.textContent = `${data.name} does NOT supply towels. ${data.notes ? '(' + data.notes + ')' : ''}`;
-        }
+        // Set club name and WILL/WON'T statement using textContent to avoid XSS
+        clubNameEl.textContent = data.name.toUpperCase();
+        const willOrNot = data.supplies_towels ? "SO THERE WILL BE TOWELS." : "SO THERE WON'T BE TOWELS.";
+        towelStatementEl.textContent = willOrNot;
+
+        // Optional notes shown smaller below the main message
+        notesEl.textContent = data.notes ? data.notes : '';
       })
       .catch(err => {
         console.error(err);
-        result.textContent = 'Error fetching status.';
+        clearMessage();
+        towelStatementEl.textContent = 'ERROR FETCHING STATUS.';
       });
   });
 });

@@ -1,10 +1,74 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* Big black uppercase message styling for towels app */
+.page-title {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.club-select {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+/* The large announcement area */
+.playing-message {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Use clamp for responsive very-large type */
+.playing-message .prefix,
+.playing-message .towel-statement {
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  /* Slightly smaller than the club name */
+  font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+}
+
+/* Club name is largest */
+.playing-message .club-name {
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(2rem, 6.5vw, 4.5rem);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Make the WILL/WOULDN'T part visually tied to the club name on narrow screens */
+@media (max-width: 520px) {
+  .playing-message {
+    flex-direction: column;
+  }
+
+  .playing-message .club-name {
+    font-size: clamp(1.6rem, 9vw, 3.2rem);
+    white-space: normal;
+  }
+}
+
+/* Notes (less prominent) */
+.notes {
+  width: 100%;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #222;
+  text-align: center;
+}
+
+/* Accessibility: ensure good contrast */
+.playing-message,
+.playing-message span {
+  color: #000;
+  background: transparent;
+}

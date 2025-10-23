@@ -1,0 +1,37 @@
+<h1>Real Tennis Clubs — Towels</h1>
+
+<label for="club-select">Choose a club:</label>
+<select id="club-select">
+  <option value="">-- select a club --</option>
+  <% Club.order(:name).each do |club| %>
+    <option value="<%= club.id %>"><%= club.name %></option>
+  <% end %>
+</select>
+
+<div id="club-result" style="margin-top:1em; font-weight:600"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const select = document.getElementById('club-select');
+  const result = document.getElementById('club-result');
+
+  select.addEventListener('change', function() {
+    const id = select.value;
+    if (!id) { result.textContent = ''; return; }
+
+    fetch(`/clubs/${id}/status`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.supplies_towels) {
+          result.textContent = `${data.name} supplies towels. ${data.notes ? '(' + data.notes + ')' : ''}`;
+        } else {
+          result.textContent = `${data.name} does NOT supply towels. ${data.notes ? '(' + data.notes + ')' : ''}`;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        result.textContent = 'Error fetching status.';
+      });
+  });
+});
+</script>

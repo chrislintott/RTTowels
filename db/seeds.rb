@@ -11,3 +11,5 @@ Club.create!(name: "Prested Hall", supplies_towels: false, notes: "Not even stri
 Club.create!(name: "Holyport", supplies_towels: true, notes: "For Apres Ski")
 Club.create!(name: "Paris", supplies_towels: true, notes: "Beaucoup")
 Club.create!(name: "Cambridge", supplies_towels: false, notes: "Neither green nor blue")
+Club.create!(name: "CBristol", supplies_towels: false, notes: "They do have an in-house physio though")
+Club.create!(name: "CMachester", supplies_towels: true, notes: "Don't use white towels to mop up spilled claret, please")    

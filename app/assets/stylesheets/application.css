@@ -82,3 +82,27 @@
     bottom: -0.6rem;
   }
 }
+
+/* Subtle bottom-right GitHub update link */
+.update-link {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.update-link a {
+  color: #000;
+  text-decoration: none;
+}
+
+.update-link:hover {
+  background: rgba(255, 255, 255, 1);
+  opacity: 0.9;
+}

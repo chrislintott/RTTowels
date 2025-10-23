@@ -9,3 +9,5 @@ Club.create!(name: "Radley", supplies_towels: false, notes: "CJR doesn't approve
 Club.create!(name: "RTC", supplies_towels: false, notes: "I guess Prince Albert brought his own")
 Club.create!(name: "Prested Hall", supplies_towels: false, notes: "Not even stripy ones")
 Club.create!(name: "Holyport", supplies_towels: true, notes: "For Apres Ski")
+Club.create!(name: "Paris", supplies_towels: true, notes: "Beaucoup")
+Club.create!(name: "Cambridge", supplies_towels: false, notes: "Neither green nor blue")

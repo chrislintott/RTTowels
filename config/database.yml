@@ -1,9 +1,8 @@
 # config/database.yml
 
 default: &default
-  adapter: postgresql
-  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 development:
   <<: *default
@@ -18,6 +17,8 @@ test:
 production:
   primary: &primary
     <<: *default
+    adapter: postgresql
+    encoding: unicode
     url: <%= ENV["DATABASE_URL"] %>
 
   queue:
